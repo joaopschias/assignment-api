@@ -7,7 +7,9 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot(
+      process.env.MONGO_URL || 'mongodb://mongo-db:27017/nest',
+    ),
     AuthModule,
     UsersModule,
   ],

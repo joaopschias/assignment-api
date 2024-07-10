@@ -10,9 +10,9 @@ import { AuthController } from './auth.controller';
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({ session: false }),
     JwtModule.register({
-      secret: 'secretKey', // Use a secure key in production
+      secret: 'secretKey',
       signOptions: { expiresIn: '60m' },
     }),
   ],
