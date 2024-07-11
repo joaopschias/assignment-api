@@ -1,73 +1,175 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Assignment API Project
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is the Assignment API project built with NestJS. The API provides various functionalities including user authentication and profile management.
+
+## Requirements
+
+To run this project, ensure you have the following installed on your machine:
+
+- Node.js (>= 12.x)
+- npm (>= 6.x) or yarn (>= 1.x)
+- Docker (>= 20.x)
+- Docker Compose (>= 1.27.x)
 
 ## Installation
 
+### Clone the Repository
+
+To download the project, clone it from the GitHub repository:
 ```bash
-$ yarn install
+git clone https://github.com/joaopschias/assignment-api.git && cd assignment-api
 ```
 
-## Running the app
+### Environment Variables
+
+Create a `.env` file in the root directory of the project by copying from the `.env.example` file:
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+cp .env.example .env
 ```
 
-## Test
+Ensure you update the `.env` file with any necessary configuration values.
+
+### Install Dependencies
+
+You can install the project dependencies using either npm or yarn.
+
+Using npm:
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+npm install
 ```
 
-## Support
+Using yarn:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+yarn install
+```
 
-## Stay in touch
+## Running the Project
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Running with Docker
 
-## License
+To run the project using Docker, follow these steps:
 
-Nest is [MIT licensed](LICENSE).
+We use this method to separate concerns between the database and the application itself. This way, you can run MongoDB in a container while developing the NestJS application locally with live reload for faster development cycles. This approach provides flexibility and efficiency during development.
+
+1. **Start MongoDB using Docker Compose**
+    ```bash
+    docker-compose up -d mongo-db
+    ```
+
+2. **Run the NestJS application locally**
+
+   Ensure your `.env` file has the correct MongoDB connection string (`MONGO_URL`).
+    ```bash
+    yarn start:dev
+    ```
+
+    You can also choose to run both MongoDB and the NestJS application using Docker:
+
+3. **Start all services using Docker Compose**
+    ```bash
+    docker-compose up -d
+    ```
+
+Alternatively, you can run MongoDB in Docker and the NestJS application locally using your terminal as described above. This provides the benefit of live reload for the NestJS application.
+
+### Running without Docker
+
+If you prefer to run MongoDB and the NestJS application locally without Docker, make sure MongoDB is installed and running on your machine.
+
+1. **Start MongoDB Locally**
+
+   Ensure MongoDB is running locally on port 27017. If you have MongoDB installed, you can start it using:
+
+    ```bash
+    mongod
+    ```
+   
+2. **Run the NestJS application**
+
+    ```bash
+    yarn start:dev
+    ```
+
+## Useful Docker Commands and Further Reading
+
+If you're new to Docker or need a refresher, here are some of the most useful Docker commands:
+
+- **Start services defined in docker-compose.yml**
+    ```bash
+    docker-compose up -d
+    ```
+
+- **Stop all running containers**
+    ```bash
+    docker stop $(docker ps -q)
+    ```
+
+- **Remove all containers**
+    ```bash
+    docker rm $(docker ps -a -q)
+    ```
+
+- **Remove all images**
+    ```bash
+    docker rmi $(docker images -q)
+    ```
+
+- **Clean up the system (remove all unused containers, networks, images, and optionally, volumes)**
+    ```bash
+    docker system prune -a --volumes
+    ```
+
+- **Build an image from a Dockerfile**
+    ```bash
+    docker build -t <image_name> .
+    ```
+
+- **Run a container from an image**
+    ```bash
+    docker run -d -p <host_port>:<container_port> <image_name>
+    ```
+
+- **List all running containers**
+    ```bash
+    docker ps
+    ```
+
+- **Stop a running container**
+    ```bash
+    docker stop <container_id>
+    ```
+
+- **Remove a stopped container**
+    ```bash
+    docker rm <container_id>
+    ```
+
+- **List all images**
+    ```bash
+    docker images
+    ```
+
+- **Remove an image**
+    ```bash
+    docker rmi <image_id>
+    ```
+
+- **View container logs**
+    ```bash
+    docker logs <container_id>
+    ```
+
+For more detailed information and advanced usage, please refer to the [official Docker documentation](https://docs.docker.com/).
+
+## Conclusion
+
+This README provides the necessary steps to set up and run the Assignment API project using both Docker and local environments. By following these instructions, you can efficiently develop and test the API functionalities.
+
+If you have any questions or need further assistance, please feel free to reach out.
+
+Happy coding!
