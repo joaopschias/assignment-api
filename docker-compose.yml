@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  nest-app:
+    build: .
+    container_name: nest-app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo-db
+    environment:
+      MONGO_URL: mongodb://mongo-db:27017/nest
+      JWT_SECRET: secretKey  # Ensure this matches the secret in your code
+
+volumes:
+  mongo-data:
