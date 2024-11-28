@@ -17,22 +17,24 @@ COPY . .
 EXPOSE 3000
 
 # Start the application in development mode
-CMD ["yarn", "start:dev"]
+CMD ["sh", "-c", "yarn console seed && yarn start:dev"]
 
 ###################
 # Build for production
 ###################
 FROM node:18-alpine AS build
 
+# Set the working directory
 WORKDIR /usr/src/app
 
+# Copy dependencies and source files from the development stage
 COPY --from=development /usr/src/app ./
 
 # Run the build command which creates the production bundle
 RUN yarn build
 
-# Install only production dependencies
-RUN yarn install --production --frozen-lockfile && yarn cache clean
+# Install all dependencies, including dev dependencies, to ensure tools like ts-node are available
+RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 
 # Set the NODE_ENV environment variable
 ENV NODE_ENV=production
@@ -42,12 +44,14 @@ ENV NODE_ENV=production
 ###################
 FROM node:18-alpine AS production
 
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the bundled code from the build stage
+# Copy the bundled code and dependencies from the build stage
 COPY --from=build /usr/src/app ./
 
+# Expose the application port
 EXPOSE 3000
 
-# Start the server using the production build
-CMD ["node", "dist/main"]
+# Start the server and seed the database using the production build
+CMD ["sh", "-c", "yarn console seed && node dist/main"]

@@ -1,3 +1,4 @@
+
 # Assignment API Project
 
 ## Description
@@ -8,10 +9,10 @@ This is the Assignment API project built with NestJS. The API provides various f
 
 To run this project, ensure you have the following installed on your machine:
 
-- Node.js (>= 12.x)
-- npm (>= 6.x) or yarn (>= 1.x)
-- Docker (>= 20.x)
-- Docker Compose (>= 1.27.x)
+- [Node.js (>= 12.x)](https://nodejs.org/)
+- [npm (>= 6.x)](https://www.npmjs.com/) or [yarn (>= 1.x)](https://yarnpkg.com/)
+- [Docker (>= 20.x)](https://www.docker.com/)
+- [Docker Compose Plugin (>= 2.0.0)](https://docs.docker.com/compose/)
 
 ## Installation
 
@@ -56,9 +57,11 @@ To run the project using Docker, follow these steps:
 
 We use this method to separate concerns between the database and the application itself. This way, you can run MongoDB in a container while developing the NestJS application locally with live reload for faster development cycles. This approach provides flexibility and efficiency during development.
 
+> **Note:** If you are using an older version of Docker (before version 20.x or without the Docker Compose plugin), the command `docker compose` may not work. In that case, use `docker-compose` instead. Ensure your Docker version is up-to-date to avoid compatibility issues.
+
 1. **Start MongoDB using Docker Compose**
     ```bash
-    docker-compose up -d mongo-db
+    docker compose up -d mongo-db
     ```
 
 2. **Run the NestJS application locally**
@@ -68,11 +71,11 @@ We use this method to separate concerns between the database and the application
     yarn start:dev
     ```
 
-    You can also choose to run both MongoDB and the NestJS application using Docker:
+   You can also choose to run both MongoDB and the NestJS application using Docker:
 
 3. **Start all services using Docker Compose**
     ```bash
-    docker-compose up -d
+    docker compose up -d
     ```
 
 Alternatively, you can run MongoDB in Docker and the NestJS application locally using your terminal as described above. This provides the benefit of live reload for the NestJS application.
@@ -88,12 +91,47 @@ If you prefer to run MongoDB and the NestJS application locally without Docker, 
     ```bash
     mongod
     ```
-   
+
 2. **Run the NestJS application**
 
     ```bash
     yarn start:dev
     ```
+
+## Available Commands
+
+The project includes several `npm`/`yarn` scripts for development and deployment. Below is an explanation of each command in the `package.json` file:
+
+### General Commands
+
+- **`yarn build`**:
+  Compiles the TypeScript code into JavaScript, generating a production-ready build in the `dist` folder.
+
+- **`yarn start`**:
+  Starts the compiled application from the `dist` folder in production mode.
+
+- **`yarn start:dev`**:
+  Starts the application in development mode with hot-reloading enabled. Useful for local development.
+
+- **`yarn start:prod`**:
+  Starts the application in production mode. This is typically used for deployment.
+
+- **`yarn test`**:
+  Runs the application's unit tests using Jest.
+
+- **`yarn format`**:
+  Formats all TypeScript files in the `src` and `test` directories using Prettier.
+
+- **`yarn lint`**:
+  Lints the codebase using ESLint and fixes any auto-fixable issues.
+
+### Console Commands
+
+- **`yarn console`**:
+  Opens the NestJS console environment, allowing you to run commands directly within the application context.
+
+- **`yarn console seed`**:
+  Runs the seeding process to populate the database with initial data, including the wildcard user (`developer@example.com` / `dev123`).
 
 ## Useful Docker Commands and Further Reading
 
@@ -101,7 +139,7 @@ If you're new to Docker or need a refresher, here are some of the most useful Do
 
 - **Start services defined in docker-compose.yml**
     ```bash
-    docker-compose up -d
+    docker compose up -d
     ```
 
 - **Stop all running containers**
